@@ -20,4 +20,8 @@ describe("getDiceThrowPoints", () => {
   it("should give 35 points when a square figure have been thrown", () => {
     expect(getDiceThrowPoints([1, 4, 4, 4, 4])).toBe(35);
   });
+
+  it("should give 28 points when a brelan figure have been thrown", () => {
+    expect(getDiceThrowPoints([1, 5, 4, 4, 4])).toBe(28);
+  });
 });
