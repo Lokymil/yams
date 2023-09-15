@@ -24,6 +24,12 @@ const isSquare = (dices) =>
 const isBrelan = (dices) =>
   Object.values(getDicesCount(dices)).some((countOfDice) => countOfDice === 3);
 
+const isFull = (dices) => {
+  const dicesCount = Object.values(getDicesCount(dices));
+
+  return dicesCount.includes(3) && dicesCount.includes(2);
+};
+
 const getDiceThrowPoints = (dices) => {
   if (!dices || dices.length === 0) {
     return 0;
@@ -39,6 +45,10 @@ const getDiceThrowPoints = (dices) => {
 
   if (isSquare(dices)) {
     return 35;
+  }
+
+  if (isFull(dices)) {
+    return 30;
   }
 
   if (isBrelan(dices)) {

@@ -24,4 +24,8 @@ describe("getDiceThrowPoints", () => {
   it("should give 28 points when a brelan figure have been thrown", () => {
     expect(getDiceThrowPoints([1, 5, 4, 4, 4])).toBe(28);
   });
+
+  it("should give 30 points when a full figure have been thrown", () => {
+    expect(getDiceThrowPoints([5, 5, 4, 4, 4])).toBe(30);
+  });
 });
