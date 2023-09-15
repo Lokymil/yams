@@ -72,46 +72,62 @@ const isSmallSuite = (dices) => {
   return isSuite(lowerDices) || isSuite(upperDices);
 };
 
-const getDiceThrowPoints = (dices) => {
+const getDiceThrowInfos = (dices, forbiddenFigure) => {
   if (!dices || dices.length === 0) {
     return { figure: "", points: 0 };
   }
 
-  if (isYams(dices)) {
+  if (!forbiddenFigure?.includes(FIGURES.YAMS) && isYams(dices)) {
     return { figure: FIGURES.YAMS, points: POINTS[FIGURES.YAMS] };
   }
 
-  if (isGreatSuite(dices)) {
+  if (!forbiddenFigure?.includes(FIGURES.GREAT_SUITE) && isGreatSuite(dices)) {
     return { figure: FIGURES.GREAT_SUITE, points: POINTS[FIGURES.GREAT_SUITE] };
   }
 
-  if (isSquare(dices)) {
+  if (!forbiddenFigure?.includes(FIGURES.SQUARE) && isSquare(dices)) {
     return { figure: FIGURES.SQUARE, points: POINTS[FIGURES.SQUARE] };
   }
 
-  if (isFull(dices)) {
+  if (!forbiddenFigure?.includes(FIGURES.FULL) && isFull(dices)) {
     return { figure: FIGURES.FULL, points: POINTS[FIGURES.FULL] };
   }
 
-  if (isBrelan(dices)) {
+  if (!forbiddenFigure?.includes(FIGURES.BRELAN) && isBrelan(dices)) {
     return { figure: FIGURES.BRELAN, points: POINTS[FIGURES.BRELAN] };
   }
 
-  if (isSmallSuite(dices)) {
+  if (!forbiddenFigure?.includes(FIGURES.SMALL_SUITE) && isSmallSuite(dices)) {
     return { figure: FIGURES.SMALL_SUITE, points: POINTS[FIGURES.SMALL_SUITE] };
   }
 
-  return {
-    figure: FIGURES.LUCK,
-    points: dices.reduce((sum, dice) => sum + dice, 0),
-  };
+  if (!forbiddenFigure?.includes(FIGURES.LUCK)) {
+    return {
+      figure: FIGURES.LUCK,
+      points: dices.reduce((sum, dice) => sum + dice, 0),
+    };
+  }
+
+  return { figure: "", points: 0 };
 };
 
-const getMultipleDiceThrowsPoints = (throws) =>
-  throws.reduce((sum, dices) => sum + getDiceThrowPoints(dices).points, 0);
+const getMultipleDiceThrowsPoints = (throws) => {
+  let doneFigure = [];
+  return throws
+    .map((dices) => {
+      const infos = getDiceThrowInfos(dices, doneFigure);
+
+      console.log(infos);
+
+      doneFigure.push(infos.figure);
+
+      return infos.points;
+    })
+    .reduce((sum, points) => sum + points, 0);
+};
 
 module.exports = {
-  getDiceThrowPoints,
+  getDiceThrowInfos,
   getMultipleDiceThrowsPoints,
   POINTS,
   FIGURES,
