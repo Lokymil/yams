@@ -2,47 +2,75 @@ const {
   getDiceThrowPoints,
   getMultipleDiceThrowsPoints,
   POINTS,
+  FIGURES,
 } = require(".");
 
 describe("getDiceThrowPoints", () => {
   it("should give 0 point when no dices have been thrown", () => {
-    expect(getDiceThrowPoints()).toBe(0);
+    expect(getDiceThrowPoints()).toEqual({ figure: "", points: 0 });
   });
 
   it("should give 50 points when a YAMS figure have been thrown", () => {
-    expect(getDiceThrowPoints([5, 5, 5, 5, 5])).toBe(50);
+    expect(getDiceThrowPoints([5, 5, 5, 5, 5])).toEqual({
+      figure: FIGURES.YAMS,
+      points: 50,
+    });
   });
 
   it("should give 40 points when a sorted great suite figure have been thrown", () => {
-    expect(getDiceThrowPoints([1, 2, 3, 4, 5])).toBe(40);
+    expect(getDiceThrowPoints([1, 2, 3, 4, 5])).toEqual({
+      figure: FIGURES.GREAT_SUITE,
+      points: 40,
+    });
   });
 
   it("should give 40 points when a unsorted great suite figure have been thrown", () => {
-    expect(getDiceThrowPoints([5, 2, 4, 3, 6])).toBe(40);
+    expect(getDiceThrowPoints([5, 2, 4, 3, 6])).toEqual({
+      figure: FIGURES.GREAT_SUITE,
+      points: 40,
+    });
   });
 
   it("should give 35 points when a square figure have been thrown", () => {
-    expect(getDiceThrowPoints([1, 4, 4, 4, 4])).toBe(35);
+    expect(getDiceThrowPoints([1, 4, 4, 4, 4])).toEqual({
+      figure: FIGURES.SQUARE,
+      points: 35,
+    });
   });
 
   it("should give 28 points when a brelan figure have been thrown", () => {
-    expect(getDiceThrowPoints([1, 5, 4, 4, 4])).toBe(28);
+    expect(getDiceThrowPoints([1, 5, 4, 4, 4])).toEqual({
+      figure: FIGURES.BRELAN,
+      points: 28,
+    });
   });
 
   it("should give 30 points when a full figure have been thrown", () => {
-    expect(getDiceThrowPoints([5, 5, 4, 4, 4])).toBe(30);
+    expect(getDiceThrowPoints([5, 5, 4, 4, 4])).toEqual({
+      figure: FIGURES.FULL,
+      points: 30,
+    });
   });
 
   it("should give 25 points when a sorted small suite figure have been thrown", () => {
-    expect(getDiceThrowPoints([4, 2, 3, 4, 5])).toBe(25);
+    expect(getDiceThrowPoints([4, 2, 3, 4, 5])).toEqual({
+      figure: FIGURES.SMALL_SUITE,
+      points: 25,
+    });
   });
 
   it("should give 25 points when a unsorted small suite figure have been thrown", () => {
-    expect(getDiceThrowPoints([5, 2, 4, 3, 3])).toBe(25);
+    expect(getDiceThrowPoints([5, 2, 4, 3, 3])).toEqual({
+      figure: FIGURES.SMALL_SUITE,
+      points: 25,
+    });
   });
 
   it("should give some of dice as points (luck) when no other figure have been thrown", () => {
-    expect(getDiceThrowPoints([4, 5, 5, 6, 6])).toBe(26);
+    expect(getDiceThrowPoints([4, 5, 5, 6, 6])).toEqual({
+      figure: FIGURES.LUCK,
+      points: 26,
+    });
   });
 });
 
@@ -55,6 +83,11 @@ describe("getMultipleDiceThrowsPoints", () => {
         [5, 5, 4, 4, 4], // full
         [4, 5, 5, 6, 6], // luck
       ])
-    ).toBe(POINTS.YAMS + POINTS.GREAT_SUITE + POINTS.FULL + 26);
+    ).toEqual(
+      POINTS[FIGURES.YAMS] +
+        POINTS[FIGURES.GREAT_SUITE] +
+        POINTS[FIGURES.FULL] +
+        26
+    );
   });
 });

@@ -1,10 +1,20 @@
+const FIGURES = {
+  YAMS: "YAMS",
+  GREAT_SUITE: "GREAT_SUITE",
+  SQUARE: "SQUARE",
+  FULL: "FULL",
+  BRELAN: "BRELAN",
+  SMALL_SUITE: "SMALL_SUITE",
+  LUCK: "LUCK",
+};
+
 const POINTS = {
-  YAMS: 50,
-  GREAT_SUITE: 40,
-  SQUARE: 35,
-  FULL: 30,
-  BRELAN: 28,
-  SMALL_SUITE: 25,
+  [FIGURES.YAMS]: 50,
+  [FIGURES.GREAT_SUITE]: 40,
+  [FIGURES.SQUARE]: 35,
+  [FIGURES.FULL]: 30,
+  [FIGURES.BRELAN]: 28,
+  [FIGURES.SMALL_SUITE]: 25,
 };
 
 const isYams = (dices) =>
@@ -64,41 +74,45 @@ const isSmallSuite = (dices) => {
 
 const getDiceThrowPoints = (dices) => {
   if (!dices || dices.length === 0) {
-    return 0;
+    return { figure: "", points: 0 };
   }
 
   if (isYams(dices)) {
-    return POINTS.YAMS;
+    return { figure: FIGURES.YAMS, points: POINTS[FIGURES.YAMS] };
   }
 
   if (isGreatSuite(dices)) {
-    return POINTS.GREAT_SUITE;
+    return { figure: FIGURES.GREAT_SUITE, points: POINTS[FIGURES.GREAT_SUITE] };
   }
 
   if (isSquare(dices)) {
-    return POINTS.SQUARE;
+    return { figure: FIGURES.SQUARE, points: POINTS[FIGURES.SQUARE] };
   }
 
   if (isFull(dices)) {
-    return POINTS.FULL;
+    return { figure: FIGURES.FULL, points: POINTS[FIGURES.FULL] };
   }
 
   if (isBrelan(dices)) {
-    return POINTS.BRELAN;
+    return { figure: FIGURES.BRELAN, points: POINTS[FIGURES.BRELAN] };
   }
 
   if (isSmallSuite(dices)) {
-    return POINTS.SMALL_SUITE;
+    return { figure: FIGURES.SMALL_SUITE, points: POINTS[FIGURES.SMALL_SUITE] };
   }
 
-  return dices.reduce((sum, dice) => sum + dice, 0);
+  return {
+    figure: FIGURES.LUCK,
+    points: dices.reduce((sum, dice) => sum + dice, 0),
+  };
 };
 
 const getMultipleDiceThrowsPoints = (throws) =>
-  throws.reduce((sum, dices) => sum + getDiceThrowPoints(dices), 0);
+  throws.reduce((sum, dices) => sum + getDiceThrowPoints(dices).points, 0);
 
 module.exports = {
   getDiceThrowPoints,
   getMultipleDiceThrowsPoints,
   POINTS,
+  FIGURES,
 };
