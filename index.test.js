@@ -36,4 +36,8 @@ describe("getDiceThrowPoints", () => {
   it("should give 25 points when a unsorted small suite figure have been thrown", () => {
     expect(getDiceThrowPoints([5, 2, 4, 3, 3])).toBe(25);
   });
+
+  it("should give some of dice as points when no other figure have been thrown", () => {
+    expect(getDiceThrowPoints([4, 5, 5, 6, 6])).toBe(26);
+  });
 });

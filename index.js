@@ -82,7 +82,7 @@ const getDiceThrowPoints = (dices) => {
     return 25;
   }
 
-  return 0;
+  return dices.reduce((sum, dice) => sum + dice, 0);
 };
 
 module.exports = {
