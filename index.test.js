@@ -28,4 +28,12 @@ describe("getDiceThrowPoints", () => {
   it("should give 30 points when a full figure have been thrown", () => {
     expect(getDiceThrowPoints([5, 5, 4, 4, 4])).toBe(30);
   });
+
+  it("should give 25 points when a sorted small suite figure have been thrown", () => {
+    expect(getDiceThrowPoints([4, 2, 3, 4, 5])).toBe(25);
+  });
+
+  it("should give 25 points when a unsorted small suite figure have been thrown", () => {
+    expect(getDiceThrowPoints([5, 2, 4, 3, 3])).toBe(25);
+  });
 });

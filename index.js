@@ -1,12 +1,14 @@
 const isYams = (dices) =>
   dices.filter((dice) => dice === dices[0]).length === 5;
 
-const isGreatSuite = (dices) =>
+const isSuite = (dices) =>
   dices
     .sort()
     .every((dice, index, sortedDices) =>
       index === 0 ? true : dice - 1 === sortedDices[index - 1]
     );
+
+const isGreatSuite = (dices) => isSuite(dices);
 
 const getDicesCount = (dices) =>
   dices.reduce((scores, dice) => ({ ...scores, [dice]: scores[dice] + 1 }), {
@@ -28,6 +30,27 @@ const isFull = (dices) => {
   const dicesCount = Object.values(getDicesCount(dices));
 
   return dicesCount.includes(3) && dicesCount.includes(2);
+};
+
+const isSmallSuite = (dices) => {
+  const deduplicatedSortedDices = dices
+    .reduce((deduplicatedDices, dice) => {
+      if (deduplicatedDices.includes(dice)) {
+        return deduplicatedDices;
+      }
+
+      return [...deduplicatedDices, dice];
+    }, [])
+    .sort();
+
+  if (deduplicatedSortedDices.length < 4) {
+    return false;
+  }
+
+  const lowerDices = deduplicatedSortedDices.slice(5);
+  const upperDices = deduplicatedSortedDices.slice(-4);
+
+  return isSuite(lowerDices) || isSuite(upperDices);
 };
 
 const getDiceThrowPoints = (dices) => {
@@ -53,6 +76,10 @@ const getDiceThrowPoints = (dices) => {
 
   if (isBrelan(dices)) {
     return 28;
+  }
+
+  if (isSmallSuite(dices)) {
+    return 25;
   }
 
   return 0;
