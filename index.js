@@ -85,6 +85,10 @@ const getDiceThrowPoints = (dices) => {
   return dices.reduce((sum, dice) => sum + dice, 0);
 };
 
+const getMultipleDiceThrowsPoints = (throws) =>
+  throws.reduce((sum, dices) => sum + getDiceThrowPoints(dices), 0);
+
 module.exports = {
   getDiceThrowPoints,
+  getMultipleDiceThrowsPoints,
 };

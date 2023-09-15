@@ -1,4 +1,4 @@
-const { getDiceThrowPoints } = require(".");
+const { getDiceThrowPoints, getMultipleDiceThrowsPoints } = require(".");
 
 describe("getDiceThrowPoints", () => {
   it("should give 0 point when no dices have been thrown", () => {
@@ -37,7 +37,20 @@ describe("getDiceThrowPoints", () => {
     expect(getDiceThrowPoints([5, 2, 4, 3, 3])).toBe(25);
   });
 
-  it("should give some of dice as points when no other figure have been thrown", () => {
+  it("should give some of dice as points (luck) when no other figure have been thrown", () => {
     expect(getDiceThrowPoints([4, 5, 5, 6, 6])).toBe(26);
+  });
+});
+
+describe("getMultipleDiceThrowsPoints", () => {
+  it("should give some of figure points when multiple throws is provided", () => {
+    expect(
+      getMultipleDiceThrowsPoints([
+        [5, 5, 5, 5, 5], // yams
+        [5, 2, 4, 3, 6], // square
+        [5, 5, 4, 4, 4], // full
+        [4, 5, 5, 6, 6], // luck
+      ])
+    ).toBe(50 + 40 + 30 + 26);
   });
 });
