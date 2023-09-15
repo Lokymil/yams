@@ -1,4 +1,8 @@
-const { getDiceThrowPoints, getMultipleDiceThrowsPoints } = require(".");
+const {
+  getDiceThrowPoints,
+  getMultipleDiceThrowsPoints,
+  POINTS,
+} = require(".");
 
 describe("getDiceThrowPoints", () => {
   it("should give 0 point when no dices have been thrown", () => {
@@ -47,10 +51,10 @@ describe("getMultipleDiceThrowsPoints", () => {
     expect(
       getMultipleDiceThrowsPoints([
         [5, 5, 5, 5, 5], // yams
-        [5, 2, 4, 3, 6], // square
+        [5, 2, 4, 3, 6], // great suite
         [5, 5, 4, 4, 4], // full
         [4, 5, 5, 6, 6], // luck
       ])
-    ).toBe(50 + 40 + 30 + 26);
+    ).toBe(POINTS.YAMS + POINTS.GREAT_SUITE + POINTS.FULL + 26);
   });
 });

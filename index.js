@@ -1,3 +1,12 @@
+const POINTS = {
+  YAMS: 50,
+  GREAT_SUITE: 40,
+  SQUARE: 35,
+  FULL: 30,
+  BRELAN: 28,
+  SMALL_SUITE: 25,
+};
+
 const isYams = (dices) =>
   dices.filter((dice) => dice === dices[0]).length === 5;
 
@@ -59,27 +68,27 @@ const getDiceThrowPoints = (dices) => {
   }
 
   if (isYams(dices)) {
-    return 50;
+    return POINTS.YAMS;
   }
 
   if (isGreatSuite(dices)) {
-    return 40;
+    return POINTS.GREAT_SUITE;
   }
 
   if (isSquare(dices)) {
-    return 35;
+    return POINTS.SQUARE;
   }
 
   if (isFull(dices)) {
-    return 30;
+    return POINTS.FULL;
   }
 
   if (isBrelan(dices)) {
-    return 28;
+    return POINTS.BRELAN;
   }
 
   if (isSmallSuite(dices)) {
-    return 25;
+    return POINTS.SMALL_SUITE;
   }
 
   return dices.reduce((sum, dice) => sum + dice, 0);
@@ -91,4 +100,5 @@ const getMultipleDiceThrowsPoints = (throws) =>
 module.exports = {
   getDiceThrowPoints,
   getMultipleDiceThrowsPoints,
+  POINTS,
 };
