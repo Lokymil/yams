@@ -117,8 +117,6 @@ const getMultipleDiceThrowsPoints = (throws) => {
     .map((dices) => {
       const infos = getDiceThrowInfos(dices, doneFigure);
 
-      console.log(infos);
-
       doneFigure.push(infos.figure);
 
       return infos.points;
